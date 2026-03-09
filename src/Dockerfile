@@ -1,4 +1,4 @@
-FROM node:22-alpine
+FROM node:25-alpine
 WORKDIR /app
 
 # ✅ On copie les fichiers de dépendances (présents dans le même dossier que le Dockerfile)
