@@ -12,7 +12,7 @@ jobs:
     steps:
         - uses: actions/checkout@v4
         - name: Build Docker image
-          run: docker build -t vuln-app:${{ github.sha }} .
+          run: docker build -t vuln-app:${{ github.sha }} -f src/Dockerfile src/
         - name: Save image
           run: docker save vuln-app:${{ github.sha }} > image.tar
         - name: Upload artifact
