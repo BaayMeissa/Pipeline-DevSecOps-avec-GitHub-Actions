@@ -1,4 +1,6 @@
 FROM node:20.20.1-alpine3.23
+# 🔥 AJOUT CRUCIAL : Met à jour les librairies système pour corriger les failles CRITICAL
+RUN apk update && apk upgrade --no-cache
 WORKDIR /app
 
 # ✅ On copie les fichiers de dépendances (présents dans le même dossier que le Dockerfile)
