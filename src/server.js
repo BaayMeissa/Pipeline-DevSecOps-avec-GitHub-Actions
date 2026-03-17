@@ -57,16 +57,13 @@ res.json({ message: 'Debug mode' });
 });
 }
 
-// Route modifiée pour déclencher la règle SQL Injection
 app.get('/user-profile', (req, res) => {
     const userId = req.query.id;
 
-    // 1. Ceci va déclencher la règle SQL Injection (SAST)
-    const query = "SELECT * FROM users WHERE id = '" + userId + "'";
-    console.log("Database executing:", query); 
-
-    // 2. Ceci déclenche la règle XSS (ce que tu as actuellement)
-    res.send("Profil de l'utilisateur " + userId);
+    //INJECTION SQL
+    // Semgrep détecte la concaténation dans une chaîne commençant par SELECT/INSERT/UPDATE
+    const mySqlQuery = "SELECT * FROM users WHERE id = '" + userId + "'";
+    console.log("Exécution en base de données : " + mySqlQuery);
 });
 
 app.listen(3000, () => console.log('✅ Secure server running'));
