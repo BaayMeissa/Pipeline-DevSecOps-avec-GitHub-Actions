@@ -57,6 +57,25 @@ res.json({ message: 'Debug mode' });
 });
 }
 
-const query = "SELECT * FROM users WHERE username = '" + username + "'";
+
+//Injection SQL
+const mysql = require('mysql2');
+
+const db = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: 'root',
+  database: 'test'
+});
+
+app.post('/api/login', (req, res) => {
+  const { username } = req.body;
+
+  const query = "SELECT * FROM users WHERE username = '" + username + "'";
+
+  db.query(query, (err, results) => {
+    res.send(results);
+  });
+});
 
 app.listen(3000, () => console.log('✅ Secure server running'));
