@@ -56,4 +56,16 @@ app.get('/debug', (req, res) => {
 res.json({ message: 'Debug mode' });
 });
 }
+
+// Route vulnérable à l'injection SQL
+app.get('/user-profile', (req, res) => {
+    const userId = req.query.id;
+    // MAUVAISE PRATIQUE : Concaténation directe (Vulnérable)
+    const query = "SELECT * FROM users WHERE id = '" + userId + "'";
+    
+    // On simule l'exécution
+    console.log("Exécution de la requête :", query);
+    res.send("Profil de l'utilisateur " + userId);
+});
+
 app.listen(3000, () => console.log('✅ Secure server running'));
