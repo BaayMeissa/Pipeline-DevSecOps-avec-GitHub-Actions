@@ -57,8 +57,8 @@ res.json({ message: 'Debug mode' });
 });
 }
 
-
 //Injection SQL
+
 const mysql = require('mysql2');
 
 const db = mysql.createConnection({
@@ -68,14 +68,12 @@ const db = mysql.createConnection({
   database: 'test'
 });
 
-app.post('/api/login', (req, res) => {
-  const { username } = req.body;
-
-  const query = "SELECT * FROM users WHERE username = '" + username + "'";
-
-  db.query(query, (err, results) => {
-    res.send(results);
+app.get('/vuln', (req, res) => {
+    const user = req.query.user;
+  
+    db.query("SELECT * FROM users WHERE username = '" + user + "'", (err, results) => {
+      res.send(results);
+    });
   });
-});
 
 app.listen(3000, () => console.log('✅ Secure server running'));
