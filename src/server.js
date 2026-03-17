@@ -57,13 +57,19 @@ res.json({ message: 'Debug mode' });
 });
 }
 
-app.get('/user-profile', (req, res) => {
-    const userId = req.query.id;
-
-    //INJECTION SQL
-    // Semgrep détecte la concaténation dans une chaîne commençant par SELECT/INSERT/UPDATE
-    const mySqlQuery = "SELECT * FROM users WHERE id = '" + userId + "'";
-    console.log("Exécution en base de données : " + mySqlQuery);
-});
+app.post('/login', (req, res) => {
+    const username = req.body.username;
+    const password = req.body.password;
+  
+    const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
+  
+    db.query(query, (err, results) => {
+      if (results.length > 0) {
+        res.send("Connexion réussie");
+      } else {
+        res.send("Échec");
+      }
+    });
+  });
 
 app.listen(3000, () => console.log('✅ Secure server running'));
