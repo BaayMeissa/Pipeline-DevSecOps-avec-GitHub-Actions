@@ -57,19 +57,6 @@ res.json({ message: 'Debug mode' });
 });
 }
 
-app.post('/login', (req, res) => {
-    const username = req.body.username;
-    const password = req.body.password;
-  
-    const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
-  
-    db.query(query, (err, results) => {
-      if (results.length > 0) {
-        res.send("Connexion réussie");
-      } else {
-        res.send("Échec");
-      }
-    });
-  });
+const query = "SELECT * FROM users WHERE username = '" + username + "'";
 
 app.listen(3000, () => console.log('✅ Secure server running'));
