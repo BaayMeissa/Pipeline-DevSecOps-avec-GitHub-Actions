@@ -57,14 +57,15 @@ res.json({ message: 'Debug mode' });
 });
 }
 
-// Route vulnérable à l'injection SQL
+// Route modifiée pour déclencher la règle SQL Injection
 app.get('/user-profile', (req, res) => {
     const userId = req.query.id;
-    // MAUVAISE PRATIQUE : Concaténation directe (Vulnérable)
+
+    // 1. Ceci va déclencher la règle SQL Injection (SAST)
     const query = "SELECT * FROM users WHERE id = '" + userId + "'";
-    
-    // On simule l'exécution
-    console.log("Exécution de la requête :", query);
+    console.log("Database executing:", query); 
+
+    // 2. Ceci déclenche la règle XSS (ce que tu as actuellement)
     res.send("Profil de l'utilisateur " + userId);
 });
 
